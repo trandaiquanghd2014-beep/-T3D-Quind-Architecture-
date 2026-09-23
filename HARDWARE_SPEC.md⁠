@@ -1,0 +1,59 @@
+HARDWARE_SPEC.md⁠
+
+> Post-Binary Hardware Architecture & 3D Monolithic Silicon Design
+
+## Overview
+The **T3D-Quind Architecture** is an advanced post-binary hardware project utilizing multi-base ($\{-1, 0, 1\}$) logic systems, 3D monolithic silicon die configurations, and zero-friction thermal management mechanics. 
+
+This repository serves as the official public publication and first-to-file intellectual property repository for the T3D-Quind core system.
+
+## Repository Structure
+- `README.md`: Project manifesto and structural overview.
+- `HARDWARE_SPEC.md`: Physical implementation specifications and die floorplans.
+
+---
+*© 2026 T3D-Quind Project. All rights reserved.*
+# T3D-Quind Silicon Core Architecture: Physical Implementation Spec
+
+> **Document Type:** Hardware Implementation Blueprint  
+> **Target Substrate:** 3D Monolithic Silicon Die / Multi-Base Core  
+> **Status:** Draft v1.0 (Ready for Repository Integration)  
+
+---
+
+## 1. SƠ ĐỒ KHỐI ĐẾ SILICON (DIE FLOORPLAN)
+* **Lõi Đa Cơ Số (Multi-Base Core Cluster):** 
+  * Cấu trúc khối được chia thành các phân vùng độc lập cho hệ Tam (Base-3) và hệ Ngũ/Thập (Base-5/10), cho phép linh hoạt chuyển đổi dòng tín hiệu thô mà không gây nghẽn mạch.
+* **Mạch Triệt Tiêu Cục Lực (Self-Cancellation Grid):** 
+  * Bố trí ngay tầng giao cắt giữa các cổng logic Alpha ($+1$) và Beta ($-1$) nhằm triệt tiêu điện áp dư thừa ngay tại chỗ, giữ cho dòng điện không lan truyền xuống lớp nền (ground plane).
+* **Mạch Đảo Pha Gương (Mirror Inverter Layer):** 
+  * Nằm áp sát khối ALU, chịu trách nhiệm thực hiện quy tắc lật gương $Val(-x) = -Val(x)$ chỉ trong một chu kỳ xung nhịp duy nhất.
+
+---
+
+## 2. TẦNG ĐỆM DỮ LIỆU THÔ (RAW STREAM BUFFER & INPUT GATE)
+* **Bộ Đệm Thông Minh (Threshold Buffer):** 
+  * Tích hợp cơ chế kiểm tra tự động chiều dài chuỗi ngay tại cổng vào:
+    * Chuỗi $\le 4$ chữ số (Hệ Tam) hoặc $\le 6$ chữ số (Hệ Ngũ/Thập) $-$ Định tuyến thẳng vào đường ống Raw Stream ($0$ độ trễ).
+    * Chuỗi vượt ngưỡng $-$ Kích hoạt bộ lọc lõi (Core Filter) để cô đặc biên độ trước khi nạp vào thanh ghi.
+* **Khung Đồng Bộ Xung Nhịp (Anti-Jitter Clock Gate):** 
+  * Loại bỏ hoàn toàn hiện tượng trôi pha (timing jitter) ở tần số cao, đảm bảo biên độ sóng vuông sắc nét cho toàn bộ các khối chức năng.
+
+---
+
+## 3. KIẾN TRÚC THANH GHI VÀ BỘ NHỚ ĐỆM (BALANCED REGISTERS & ZERO-CONFLICT CACHE)
+* **Thanh ghi đa trạng thái (Balanced Multi-State Registers):** 
+  * Thay thế các mạch lật nhị phân truyền thống bằng các ô nhớ trạng thái cân xứng ($+1, 0, -1$), giúp tiết kiệm từ 30% đến 50% số lượng transistor.
+* **Cache không tranh chấp (Zero-Conflict L1/L2):** 
+  * Tách biệt hoàn toàn các kênh truyền dữ liệu của Tiểu đội Alpha và Beta, loại bỏ hiện tượng tranh chấp tài nguyên (cache contention) ngay cả khi truy xuất ở cường độ cao.
+
+---
+
+## 4. GIAO TIẾP BUS TÍN HIỆU VI SAI (DIFFERENTIAL BUS ARCHITECTURE)
+* **Cáp Bus Đối Xứng:** 
+  * Sử dụng cặp tín hiệu vi sai tương ứng với hai cực Alpha/Beta thay cho đường điện áp đơn, triệt tiêu hoàn toàn nhiễu điện từ (EMI) trên bo mạch.
+* **Băng thông dòng chảy cao:** 
+  * Đạt hiệu suất truyền dẫn tối đa trên mỗi chu kỳ xung nhịp nhờ lược bỏ hoàn toàn các tầng giải mã gói tin trung gian.
+
+---
+*© 2026 T3D-Quind Project. All hardware implementation rights reserved.*
